@@ -1,8 +1,15 @@
 import { Carousel, Header } from '../../components/index';
 import { CarProps, TypeProps } from '../../shared/models/CarsProps';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import type { NextPage } from 'next';
+import type {
+  GetServerSideProps,
+  GetStaticPaths,
+  GetStaticProps,
+  NextPage
+} from 'next';
 import { useRouter } from 'next/router';
+import path from 'path';
+import fs from 'fs/promises';
 
 import {
   Container,
@@ -24,21 +31,21 @@ import {
 } from '../../styles/pages/details';
 import Head from 'next/head';
 
-const Details: NextPage = () => {
-  const getCarById = (id: string | string[] | undefined) => {
-    if (id) {
-      return cars.find((car: CarProps) => car.id === +id);
-    }
-  };
+export default function Details({ car }: any) {
+  // const getCarById = (id: string | string[] | undefined) => {
+  //   if (id) {
+  //     return cars.find((car: CarProps) => car.id === +id);
+  //   }
+  // };
 
   const router = useRouter();
-  const cars = useSelector((state: RootStateOrAny) => state.cars.cars);
+  // const cars = useSelector((state: RootStateOrAny) => state.cars.cars);
 
-  const id = router.query.id;
-  const car = getCarById(id);
-  const type = car.types.find((type: TypeProps) => type.selected === true);
-  const color = type.color[0].toUpperCase() + type.color.substr(1);
-
+  // const id = router.query.id;
+  // const car = getCarById(id);
+  const type = car?.types.find((type: TypeProps) => type.selected === true);
+  const color = type?.color[0].toUpperCase() + type?.color.substr(1);
+  console.log('Type:', car);
   const backHome = () => {
     router.push('/');
   };
@@ -89,9 +96,9 @@ const Details: NextPage = () => {
             onClick={backHome}
           />
           <Car>
-            <Img src={type.urlFrontView} alt={`${car.brand} ${car.model}`} />
+            <Img src={type?.urlFrontView} alt={`${car.brand} ${car.model}`} />
             <TypeContainer>
-              <Number>{type.number}</Number>
+              <Number>{type?.number}</Number>
               <Color>{color}</Color>
             </TypeContainer>
           </Car>
@@ -108,6 +115,42 @@ const Details: NextPage = () => {
       </Container>
     </div>
   );
+}
+
+async function getData() {
+  const filePath = path.join(process.cwd(), 'data', 'cars.json');
+  const jsonData = await fs.readFile(filePath);
+  const data = JSON.parse(jsonData.toString());
+
+  return data;
+}
+
+export const getStaticProps: GetStaticProps = async context => {
+  const { params } = context;
+
+  const carId = params?.cid;
+  const data = await getData();
+  const car = data.cars.find((car: CarProps) => car.id === carId);
+
+  if (!car) {
+    return { notFound: true };
+  }
+
+  return {
+    props: {
+      car
+    }
+  };
 };
 
-export default Details;
+export const getStaticPaths: GetStaticPaths = async () => {
+  const data = await getData();
+
+  const ids = data.cars.map((car: CarProps) => car.id);
+  const pathsWithParams = ids.map((id: number) => ({ params: { cid: id } }));
+
+  return {
+    paths: pathsWithParams,
+    fallback: true
+  };
+};

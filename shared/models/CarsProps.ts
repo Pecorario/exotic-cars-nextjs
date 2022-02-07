@@ -7,7 +7,7 @@ export interface TypeProps {
 }
 
 export interface CarProps {
-  id: number;
+  id: string;
   brand: string;
   model: string;
   logo: string;
