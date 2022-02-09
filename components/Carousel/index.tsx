@@ -6,6 +6,11 @@ import { useDispatch } from 'react-redux';
 
 import { Container, CarouselContainer } from './styles';
 
+const changePosition = (arr: any[], from: number, to: number) => {
+  arr.splice(to, 0, arr.splice(from, 1)[0]);
+  return arr;
+};
+
 export function Carousel({ types, id }: any) {
   const [backDisabled, setBackDisabled] = useState(false);
   const [nextDisabled, setNextDisabled] = useState(false);
@@ -14,12 +19,23 @@ export function Carousel({ types, id }: any) {
 
   const maxNumber = types.length;
 
+  const typesFormated = types.map((type: TypeProps) => {
+    return {
+      number: type.number,
+      color: type.color,
+      urlSideView: type.urlSideView,
+      urlFrontView: type.urlFrontView,
+      selected: false
+    };
+  });
+
+  console.log('Tipos? : ', typesFormated);
+
   useEffect(() => {
     if (maxNumber === 1) {
       setNextDisabled(true);
       setBackDisabled(true);
     } else if (maxNumber === 2) {
-      // setNextDisabled(false);
       setBackDisabled(true);
     }
   }, [maxNumber]);
@@ -39,11 +55,12 @@ export function Carousel({ types, id }: any) {
       dispatch(carsActions.carouselNavigation({ id: id, type: 'back' }));
     }
   };
+
   return (
     <Container>
       <ButtonNav type="primary" onClick={backType} disabled={backDisabled} />
       <CarouselContainer numberOfColors={maxNumber}>
-        {types.map((type: any) => {
+        {typesFormated.map((type: TypeProps) => {
           return (
             <CarouselItem
               url={type.urlFrontView}

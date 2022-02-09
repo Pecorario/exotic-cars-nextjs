@@ -66,10 +66,10 @@ export const ImgAndPrice = styled.div`
   flex-direction: column;
 `;
 
-export const Img = styled.img`
-  width: 100%;
-  align-self: center;
-`;
+// export const Img = styled.img`
+//   width: 100%;
+//   align-self: center;
+// `;
 
 export const Price = styled.p`
   font-family: 'Segoe UI Bold';

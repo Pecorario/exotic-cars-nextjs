@@ -15,6 +15,7 @@ export interface CarProps {
   price: number;
 }
 
-export interface InitialStateProps {
+export interface CarsProps {
   cars: CarProps[];
+  car?: CarProps;
 }

@@ -1,28 +1,19 @@
-import type { GetServerSideProps, GetStaticProps, NextPage } from 'next';
+import type { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import axios from 'axios';
-import { useEffect } from 'react';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { Header, Card } from '../components/index';
 import { CarProps } from '../shared/models/CarsProps';
-import { fetchCarsData } from '../store/cars-actions';
 import * as S from '../styles/pages/home';
-import { InitialStateProps } from '../shared/models/CarsProps';
+import { CarsProps } from '../shared/models/CarsProps';
 import path from 'path';
 import fs from 'fs/promises';
-interface HomeProps {
-  cars: any;
-}
+import { useEffect } from 'react';
+import { carsActions } from '../store/cars-slice';
+import { useDispatch } from 'react-redux';
 
-export default function Home({ cars }: HomeProps) {
+export default function Home({ cars }: CarsProps) {
   const router = useRouter();
-  // const dispatch = useDispatch();
-  // const cars = useSelector((state: RootStateOrAny) => state.cars.cars);
-
-  // useEffect(() => {
-  //   dispatch(fetchCarsData());
-  // }, [dispatch]);
+  const dispatch = useDispatch();
 
   const selectCars = (id: string) => {
     router.push({
@@ -30,6 +21,10 @@ export default function Home({ cars }: HomeProps) {
       query: { cid: id }
     });
   };
+
+  useEffect(() => {
+    dispatch(carsActions.addCars(cars));
+  }, [cars, dispatch]);
 
   return (
     <div>
@@ -80,7 +75,7 @@ export default function Home({ cars }: HomeProps) {
   );
 }
 
-export const getStaticProps: GetStaticProps<InitialStateProps> = async () => {
+export const getStaticProps: GetStaticProps<CarsProps> = async () => {
   const filePath = path.join(process.cwd(), 'data', 'cars.json');
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData.toString());

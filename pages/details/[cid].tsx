@@ -1,51 +1,34 @@
 import { Carousel, Header } from '../../components/index';
-import { CarProps, TypeProps } from '../../shared/models/CarsProps';
-import { RootStateOrAny, useSelector } from 'react-redux';
-import type {
-  GetServerSideProps,
-  GetStaticPaths,
-  GetStaticProps,
-  NextPage
-} from 'next';
+import { CarProps, CarsProps, TypeProps } from '../../shared/models/CarsProps';
+import type { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import path from 'path';
 import fs from 'fs/promises';
 
-import {
-  Container,
-  Img,
-  DetailsContainer,
-  LogoImg,
-  Price,
-  PriceAndModel,
-  Title,
-  Middle,
-  Car,
-  TypeContainer,
-  Number,
-  Color,
-  ButtonContainer,
-  ButtonMobile,
-  ButtonNormalScreen,
-  ButtonBook
-} from '../../styles/pages/details';
+import * as S from '../../styles/pages/details';
 import Head from 'next/head';
+import { RootStateOrAny, useSelector } from 'react-redux';
 
-export default function Details({ car }: any) {
-  // const getCarById = (id: string | string[] | undefined) => {
-  //   if (id) {
-  //     return cars.find((car: CarProps) => car.id === +id);
-  //   }
-  // };
+const getColor = (color: string | undefined) => {
+  if (color) {
+    return color[0].toUpperCase() + color.slice(1);
+  }
+  return;
+};
 
+export default function Details({ car }: CarsProps) {
   const router = useRouter();
-  // const cars = useSelector((state: RootStateOrAny) => state.cars.cars);
+  const type = car?.types[0];
+  const color = getColor(type?.color);
 
-  // const id = router.query.id;
-  // const car = getCarById(id);
-  const type = car?.types.find((type: TypeProps) => type.selected === true);
-  const color = type?.color[0].toUpperCase() + type?.color.substr(1);
-  console.log('Type:', car);
+  const cars = useSelector((state: RootStateOrAny) => state.cars.cars);
+  const carRdx = cars.find((carRdx: CarProps) => carRdx.id === car?.id);
+  const typeRdx = carRdx.types.find(
+    (type: TypeProps) => type.selected === true
+  );
+
+  console.log('Qual type?: ', typeRdx);
+
   const backHome = () => {
     router.push('/');
   };
@@ -79,40 +62,43 @@ export default function Details({ car }: any) {
         />
       </Head>
       <Header />
-      <Container>
-        <DetailsContainer>
-          <LogoImg src={car.logo} alt={car.brand} />
-          <PriceAndModel>
-            <Title>
-              {car.brand} {car.model}
-            </Title>
-            <Price>${car.price}/day</Price>
-          </PriceAndModel>
-        </DetailsContainer>
-        <Middle>
-          <ButtonNormalScreen
+      <S.Container>
+        <S.DetailsContainer>
+          <S.LogoImg src={car?.logo} alt={car?.brand} />
+          <S.PriceAndModel>
+            <S.Title>
+              {car?.brand} {car?.model}
+            </S.Title>
+            <S.Price>${car?.price}/day</S.Price>
+          </S.PriceAndModel>
+        </S.DetailsContainer>
+        <S.Middle>
+          <S.ButtonNormalScreen
             text="Back to catalog"
             type="primary"
             onClick={backHome}
           />
-          <Car>
-            <Img src={type?.urlFrontView} alt={`${car.brand} ${car.model}`} />
-            <TypeContainer>
-              <Number>{type?.number}</Number>
-              <Color>{color}</Color>
-            </TypeContainer>
-          </Car>
-        </Middle>
-        <ButtonContainer>
-          <ButtonMobile
+          <S.Car>
+            <S.Img
+              src={type?.urlFrontView}
+              alt={`${car?.brand} ${car?.model}`}
+            />
+            <S.TypeContainer>
+              <S.Number>{type?.number}</S.Number>
+              <S.Color>{color}</S.Color>
+            </S.TypeContainer>
+          </S.Car>
+        </S.Middle>
+        <S.ButtonContainer>
+          <S.ButtonMobile
             text="Back to catalog"
             type="primary"
             onClick={backHome}
           />
-          <ButtonBook text="Book now" type="secondary" onClick={backHome} />
-        </ButtonContainer>
-        <Carousel types={car.types} id={car.id} />
-      </Container>
+          <S.ButtonBook text="Book now" type="secondary" onClick={backHome} />
+        </S.ButtonContainer>
+        <Carousel types={car?.types} id={car?.id} />
+      </S.Container>
     </div>
   );
 }

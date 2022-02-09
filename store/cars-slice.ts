@@ -1,16 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  CarProps,
-  InitialStateProps,
-  TypeProps
-} from '../shared/models/CarsProps';
+import { CarProps, CarsProps, TypeProps } from '../shared/models/CarsProps';
 
 function changePosition(arr: any[], from: number, to: number) {
   arr.splice(to, 0, arr.splice(from, 1)[0]);
   return arr;
 }
 
-const initialState: InitialStateProps = {
+const initialState: CarsProps = {
   cars: []
 };
 
