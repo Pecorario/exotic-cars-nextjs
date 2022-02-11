@@ -10,10 +10,12 @@ import fs from 'fs/promises';
 import { useEffect } from 'react';
 import { carsActions } from '../store/cars-slice';
 import { useDispatch } from 'react-redux';
+import { useAppContext } from '../store/AppWrapper';
 
 export default function Home({ cars }: CarsProps) {
   const router = useRouter();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const { addCars } = useAppContext();
 
   const selectCars = (id: string) => {
     router.push({
@@ -23,8 +25,8 @@ export default function Home({ cars }: CarsProps) {
   };
 
   useEffect(() => {
-    dispatch(carsActions.addCars(cars));
-  }, [cars, dispatch]);
+    addCars(cars);
+  }, [addCars, cars]);
 
   return (
     <div>

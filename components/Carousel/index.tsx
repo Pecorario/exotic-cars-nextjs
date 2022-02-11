@@ -1,35 +1,37 @@
 import { ButtonNav, CarouselItem } from '../index';
-import { TypeProps } from '../../shared/models/CarsProps';
-import { carsActions } from '../../store/cars-slice';
+import { CarProps, TypeProps } from '../../shared/models/CarsProps';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-
+import { useAppContext } from '../../store/AppWrapper';
 import { Container, CarouselContainer } from './styles';
 
-const changePosition = (arr: any[], from: number, to: number) => {
-  arr.splice(to, 0, arr.splice(from, 1)[0]);
-  return arr;
-};
+interface CarouselProps {
+  types: TypeProps[] | undefined;
+  id: string | undefined;
+}
 
-export function Carousel({ types, id }: any) {
+export function Carousel({ types, id }: CarouselProps) {
   const [backDisabled, setBackDisabled] = useState(false);
   const [nextDisabled, setNextDisabled] = useState(false);
-  const dispatch = useDispatch();
-  const selected = types.find((type: TypeProps) => type.selected === true);
+  // const dispatch = useDispatch();
+  const { cars, organizingArray, carouselNavigation } = useAppContext();
 
-  const maxNumber = types.length;
+  const carCtx = cars.find((car: CarProps) => car.id === id);
+  const selected = carCtx?.types.find(
+    (type: TypeProps) => type.selected === true
+  );
+  // const selected = types.find((type: TypeProps) => type.selected === true);
 
-  const typesFormated = types.map((type: TypeProps) => {
-    return {
-      number: type.number,
-      color: type.color,
-      urlSideView: type.urlSideView,
-      urlFrontView: type.urlFrontView,
-      selected: false
-    };
-  });
+  const maxNumber = types?.length;
 
-  console.log('Tipos? : ', typesFormated);
+  // const typesFormated = types.map((type: TypeProps) => {
+  //   return {
+  //     number: type.number,
+  //     color: type.color,
+  //     urlSideView: type.urlSideView,
+  //     urlFrontView: type.urlFrontView,
+  //     selected: false
+  //   };
+  // });
 
   useEffect(() => {
     if (maxNumber === 1) {
@@ -41,18 +43,20 @@ export function Carousel({ types, id }: any) {
   }, [maxNumber]);
 
   useEffect(() => {
-    dispatch(carsActions.organizingArray({ id }));
-  }, [dispatch, id, selected]);
+    if (id) {
+      organizingArray(id);
+    }
+  }, []);
 
   const nextType = () => {
-    if (maxNumber !== 1) {
-      dispatch(carsActions.carouselNavigation({ id: id, type: 'forward' }));
+    if (maxNumber !== 1 && id !== undefined) {
+      carouselNavigation('forward', id);
     }
   };
 
   const backType = () => {
-    if (maxNumber === 3) {
-      dispatch(carsActions.carouselNavigation({ id: id, type: 'back' }));
+    if (maxNumber === 3 && id !== undefined) {
+      carouselNavigation('back', id);
     }
   };
 
@@ -60,7 +64,7 @@ export function Carousel({ types, id }: any) {
     <Container>
       <ButtonNav type="primary" onClick={backType} disabled={backDisabled} />
       <CarouselContainer numberOfColors={maxNumber}>
-        {typesFormated.map((type: TypeProps) => {
+        {carCtx?.types.map((type: TypeProps) => {
           return (
             <CarouselItem
               url={type.urlFrontView}

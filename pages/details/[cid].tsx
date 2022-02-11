@@ -7,7 +7,6 @@ import fs from 'fs/promises';
 
 import * as S from '../../styles/pages/details';
 import Head from 'next/head';
-import { RootStateOrAny, useSelector } from 'react-redux';
 
 const getColor = (color: string | undefined) => {
   if (color) {
@@ -21,13 +20,13 @@ export default function Details({ car }: CarsProps) {
   const type = car?.types[0];
   const color = getColor(type?.color);
 
-  const cars = useSelector((state: RootStateOrAny) => state.cars.cars);
-  const carRdx = cars.find((carRdx: CarProps) => carRdx.id === car?.id);
-  const typeRdx = carRdx.types.find(
-    (type: TypeProps) => type.selected === true
-  );
+  // const cars = useSelector((state: RootStateOrAny) => state.cars.cars);
+  // const carRdx = cars.find((carRdx: CarProps) => carRdx.id === car?.id);
+  // const typeRdx = carRdx.types.find(
+  //   (type: TypeProps) => type.selected === true
+  // );
 
-  console.log('Qual type?: ', typeRdx);
+  // console.log('Qual type?: ', typeRdx);
 
   const backHome = () => {
     router.push('/');

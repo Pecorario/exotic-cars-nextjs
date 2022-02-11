@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 interface StyledCarouselProps {
-  numberOfColors: number;
+  numberOfColors: number | undefined;
 }
 
 export const Container = styled.div`

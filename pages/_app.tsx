@@ -2,17 +2,17 @@ import type { AppProps } from 'next/app';
 import { GlobalStyle } from '../styles/global';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
-import AppContext from '../store/AppContext';
+import { AppWrapper } from '../store/AppWrapper';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <AppContext.Provider value={{}}>
+      <AppWrapper>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
           <Component {...pageProps} />
-        </AppContext.Provider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </AppWrapper>
     </>
   );
 }
