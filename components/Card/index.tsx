@@ -1,26 +1,20 @@
-import {
-  Container,
-  KebabHorizontal,
-  Brand,
-  Model,
-  Price,
-  ImgAndPrice
-} from './styles';
 import Image from 'next/image';
-// interface
 
-export function Card({ types, brand, model, price, onClick }: any) {
+import { CardProps } from '../../shared/models/UIProps';
+import * as S from './styles';
+
+export function Card({ types, brand, model, price, onClick }: CardProps) {
   return (
-    <Container onClick={onClick}>
-      <KebabHorizontal />
+    <S.Container onClick={onClick}>
+      <S.KebabHorizontal />
       <div>
-        <Brand>{brand}</Brand>
-        <Model>{model.toUpperCase()}</Model>
+        <S.Brand>{brand}</S.Brand>
+        <S.Model>{model.toUpperCase()}</S.Model>
       </div>
-      <ImgAndPrice>
+      <S.ImgAndPrice>
         <Image src={types[0].urlSideView} alt="Car" width={300} height={100} />
-        <Price>{price}</Price>
-      </ImgAndPrice>
-    </Container>
+        <S.Price>{price}</S.Price>
+      </S.ImgAndPrice>
+    </S.Container>
   );
 }

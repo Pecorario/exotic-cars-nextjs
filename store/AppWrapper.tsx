@@ -36,7 +36,7 @@ export function AppWrapper({ children }: AppContextProviderProps) {
     console.log('Add? ', cars);
   }
 
-  function selectCar(id: string, number: number) {
+  function selectCar(id: string | undefined, number: number) {
     const carIndex = cars.findIndex((car: CarProps) => {
       return car.id === id;
     });

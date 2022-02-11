@@ -1,14 +1,14 @@
-import { carsActions } from '../../store/cars-slice';
-import { useDispatch } from 'react-redux';
 import { Container, Img } from './styles';
 import { useAppContext } from '../../store/AppWrapper';
+import { CarouselItemProps } from '../../shared/models/UIProps';
 
-export function CarouselItem({ url, selected, id, number }: any) {
-  // const dispatch = useDispatch();
+export function CarouselItem({ url, selected, id, number }: CarouselItemProps) {
   const { selectCar } = useAppContext();
 
   const selectCarFunction = () => {
-    selectCar(id, number);
+    if (id) {
+      selectCar(id, number);
+    }
   };
 
   return (

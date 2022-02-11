@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export interface StyledCarouselProps {
-  selected: boolean;
+  selected?: boolean;
 }
 
 export const Container = styled.button<StyledCarouselProps>`

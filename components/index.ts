@@ -6,6 +6,7 @@ import { Card } from './Card';
 import { Carousel } from './Carousel';
 import { CarouselItem } from './CarouselItem';
 import { Button } from './Button';
+import { ButtonHome } from './ButtonHome';
 
 export {
   Button,
@@ -15,5 +16,6 @@ export {
   ButtonNav,
   Card,
   Carousel,
-  CarouselItem
+  CarouselItem,
+  ButtonHome
 };

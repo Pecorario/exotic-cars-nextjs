@@ -209,6 +209,52 @@
         }
       ],
       "price": 725
+    },
+    {
+      "id": "c13",
+      "brand": "Ford",
+      "model": "Mustang",
+      "logo": "https://i.imgur.com/iWjUazv.png",
+      "types": [
+        {
+          "number": 1,
+          "color": "red",
+          "urlSideView": "https://i.imgur.com/oeH4Cyn.png",
+          "urlFrontView": "https://i.imgur.com/togCm2W.png"
+        }
+      ],
+      "price": 725
+    },
+    {
+      "id": "c14",
+      "brand": "Maserati",
+      "model": "Levante",
+      "logo": "https://i.imgur.com/xKg9Drw.png",
+      "types": [
+        {
+          "number": 1,
+          "color": "red",
+          "urlSideView": "https://i.imgur.com/kU3uBYt.png",
+          "urlFrontView": "https://i.imgur.com/9VE4GNk.png"
+        }
+      ],
+      "price": 725
+    },
+    {
+      "id": "c15",
+      "brand": "Maserati",
+      "model": "MC20",
+      "logo": "https://i.imgur.com/xKg9Drw.png",
+      "types": [
+        {
+          "number": 1,
+          "color": "red",
+          "urlSideView": "https://i.imgur.com/Ybpmvln.png",
+          "urlFrontView": "https://i.imgur.com/hajtoFE.png"
+        }
+      ],
+      "price": 725
     }
+
   ]
 }

@@ -46,10 +46,6 @@ export const CarouselContainer = styled.div<StyledCarouselProps>`
     margin: 0;
   }
 
-  // @media (min-width: 961px) {
-  //   width: 95%;
-  // }
-
   @media (min-width: 1350px) {
     width: 65rem;
   }

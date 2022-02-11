@@ -1,20 +1,18 @@
 import type { GetStaticProps } from 'next';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
-import { Header, Card } from '../components/index';
-import { CarProps } from '../shared/models/CarsProps';
-import * as S from '../styles/pages/home';
-import { CarsProps } from '../shared/models/CarsProps';
 import path from 'path';
 import fs from 'fs/promises';
-import { useEffect } from 'react';
-import { carsActions } from '../store/cars-slice';
-import { useDispatch } from 'react-redux';
+import Head from 'next/head';
+
 import { useAppContext } from '../store/AppWrapper';
+import { Header, Card, ButtonHome } from '../components/index';
+
+import { CarProps, CarsProps } from '../shared/models/CarsProps';
+import * as S from '../styles/pages/home';
 
 export default function Home({ cars }: CarsProps) {
   const router = useRouter();
-  // const dispatch = useDispatch();
   const { addCars } = useAppContext();
 
   const selectCars = (id: string) => {
@@ -72,6 +70,7 @@ export default function Home({ cars }: CarsProps) {
             );
           })}
         </S.ImgContainer>
+        <ButtonHome />
       </S.Container>
     </div>
   );

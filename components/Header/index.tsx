@@ -1,20 +1,9 @@
-import { ButtonHeader } from '../index';
-import { Input } from '../index';
 import { useState } from 'react';
-
 import { FaSearch } from 'react-icons/fa';
 
-import {
-  Container,
-  Content,
-  Title,
-  TitleOne,
-  TitleTwo,
-  ButtonsContainer,
-  InputsContainer,
-  InputsContainerMobile,
-  Search
-} from './styles';
+import { ButtonHeader, Input } from '../index';
+
+import * as S from './styles';
 
 export function Header() {
   const date = new Date();
@@ -43,13 +32,13 @@ export function Header() {
   };
 
   return (
-    <Container>
-      <Content>
-        <Title>
-          <TitleOne>EXOTIC</TitleOne>
-          <TitleTwo>CARS</TitleTwo>
-        </Title>
-        <InputsContainer>
+    <S.Container>
+      <S.Content>
+        <S.Title>
+          <S.TitleOne>EXOTIC</S.TitleOne>
+          <S.TitleTwo>CARS</S.TitleTwo>
+        </S.Title>
+        <S.InputsContainer>
           <Input
             type="text"
             icon="local"
@@ -68,11 +57,11 @@ export function Header() {
             value={toDate}
             onChange={toDateChangeHandler}
           />
-          <Search>
+          <S.Search>
             <FaSearch />
-          </Search>
-        </InputsContainer>
-        <ButtonsContainer>
+          </S.Search>
+        </S.InputsContainer>
+        <S.ButtonsContainer>
           <ButtonHeader
             type="primary"
             text="Sign up"
@@ -83,9 +72,9 @@ export function Header() {
             text="Sign in"
             onClick={() => alert('Sign in!')}
           />
-        </ButtonsContainer>
-      </Content>
-      <InputsContainerMobile>
+        </S.ButtonsContainer>
+      </S.Content>
+      <S.InputsContainerMobile>
         <Input
           type="text"
           icon="local"
@@ -104,10 +93,10 @@ export function Header() {
           value={toDate}
           onChange={toDateChangeHandler}
         />
-        <Search>
+        <S.Search>
           <FaSearch />
-        </Search>
-      </InputsContainerMobile>
-    </Container>
+        </S.Search>
+      </S.InputsContainerMobile>
+    </S.Container>
   );
 }

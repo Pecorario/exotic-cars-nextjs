@@ -1,12 +1,13 @@
-import { Carousel, Header } from '../../components/index';
-import { CarProps, CarsProps, TypeProps } from '../../shared/models/CarsProps';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import path from 'path';
 import fs from 'fs/promises';
 
+import { Carousel, Header } from '../../components/index';
+
+import { CarProps, CarsProps } from '../../shared/models/CarsProps';
 import * as S from '../../styles/pages/details';
-import Head from 'next/head';
 
 const getColor = (color: string | undefined) => {
   if (color) {
@@ -19,14 +20,6 @@ export default function Details({ car }: CarsProps) {
   const router = useRouter();
   const type = car?.types[0];
   const color = getColor(type?.color);
-
-  // const cars = useSelector((state: RootStateOrAny) => state.cars.cars);
-  // const carRdx = cars.find((carRdx: CarProps) => carRdx.id === car?.id);
-  // const typeRdx = carRdx.types.find(
-  //   (type: TypeProps) => type.selected === true
-  // );
-
-  // console.log('Qual type?: ', typeRdx);
 
   const backHome = () => {
     router.push('/');
