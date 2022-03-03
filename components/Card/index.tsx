@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { CardProps } from '../../shared/models/UIProps';
+import { CardProps } from '@models/UIProps';
 import * as S from './styles';
 
 export function Card({ types, brand, model, price, onClick }: CardProps) {

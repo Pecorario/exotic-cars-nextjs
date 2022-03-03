@@ -1,6 +1,6 @@
 import { BsArrowRight, BsArrowLeft } from 'react-icons/bs';
 
-import { ButtonProps } from '../../shared/models/UIProps';
+import { ButtonProps } from '@models/UIProps';
 import { Container } from './styles';
 
 export function ButtonNav({ type, onClick, disabled }: ButtonProps) {

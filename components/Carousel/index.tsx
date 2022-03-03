@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useAppContext } from '../../store/AppWrapper';
+import { useAppContext } from '@store/AppWrapper';
 
 import { ButtonNav, CarouselItem } from '../index';
 
-import { CarProps, TypeProps } from '../../shared/models/CarsProps';
-import { CarouselProps } from '../../shared/models/UIProps';
+import { CarProps, TypeProps } from '@models/CarsProps';
+import { CarouselProps } from '@models/UIProps';
 import { Container, CarouselContainer } from './styles';
 
 export function Carousel({ types, id }: CarouselProps) {

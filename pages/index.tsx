@@ -5,11 +5,11 @@ import path from 'path';
 import fs from 'fs/promises';
 import Head from 'next/head';
 
-import { useAppContext } from '../store/AppWrapper';
-import { Header, Card, ButtonHome } from '../components/index';
+import { useAppContext } from '@store/AppWrapper';
+import { Header, Card, ButtonHome } from '@components/index';
 
-import { CarProps, CarsProps } from '../shared/models/CarsProps';
-import * as S from '../styles/pages/home';
+import { CarProps, CarsProps } from '@models/CarsProps';
+import * as S from '@styles/pages/home';
 
 export default function Home({ cars }: CarsProps) {
   const router = useRouter();

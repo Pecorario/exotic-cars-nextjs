@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { CarProps, CarsProps, TypeProps } from '../shared/models/CarsProps';
+import { CarProps, TypeProps } from '../shared/models/CarsProps';
 
 type AppContextProps = {
   cars: CarProps[];
@@ -42,9 +42,15 @@ export function AppWrapper({ children }: AppContextProviderProps) {
     });
 
     const auxCars = [...cars];
+    let direction;
 
     auxCars[carIndex]?.types.map((type: TypeProps, index: number) => {
       if (type.number === number) {
+        if (index === 0) {
+          direction = 'back';
+        } else if (index === 2) {
+          direction = 'forward';
+        }
         return (type.selected = true);
       } else {
         return (type.selected = false);
@@ -52,6 +58,10 @@ export function AppWrapper({ children }: AppContextProviderProps) {
     });
 
     setCars(auxCars);
+
+    if (id && direction) {
+      organizingArray(id, direction);
+    }
   }
 
   function carouselNavigation(type: 'forward' | 'back', id: string) {
@@ -61,66 +71,42 @@ export function AppWrapper({ children }: AppContextProviderProps) {
 
     const auxCars = [...cars];
 
-    const selected = auxCars[carIndex]?.types.find(
-      (type: TypeProps) => type.selected === true
-    );
-
-    if (selected) {
-      const index = auxCars[carIndex]?.types.indexOf(selected);
-
-      if (index !== undefined) {
-        if (type === 'forward') {
-          auxCars[carIndex]?.types.map((type: TypeProps, indexArr: number) => {
-            if (indexArr === index + 1) {
-              return (type.selected = true);
-            } else {
-              return (type.selected = false);
-            }
-          });
-        } else if (type === 'back') {
-          auxCars[carIndex]?.types.map((type: TypeProps, indexArr: number) => {
-            if (indexArr === index - 1) {
-              return (type.selected = true);
-            } else {
-              return (type.selected = false);
-            }
-          });
+    if (type === 'forward') {
+      auxCars[carIndex]?.types.map((type: TypeProps, indexArr: number) => {
+        if (indexArr === 2) {
+          return (type.selected = true);
+        } else {
+          return (type.selected = false);
         }
-      }
+      });
+    } else if (type === 'back') {
+      auxCars[carIndex]?.types.map((type: TypeProps, indexArr: number) => {
+        if (indexArr === 0) {
+          return (type.selected = true);
+        } else {
+          return (type.selected = false);
+        }
+      });
     }
+
+    const direction = type === 'back' ? 'back' : 'forward';
     setCars(auxCars);
-    organizingArray(id);
+    organizingArray(id, direction);
   }
 
-  function organizingArray(id: string) {
+  function organizingArray(id: string, type?: 'forward' | 'back') {
     const carIndex = cars.findIndex((car: CarProps) => {
       return car.id === id;
     });
 
     const auxCars = [...cars];
 
-    const selected = auxCars[carIndex].types.find(
-      (type: TypeProps) => type.selected === true
-    );
-
-    if (selected) {
-      const index = auxCars[carIndex].types.indexOf(selected);
-      console.log('QUal o index selecionado? ', index);
-      if (index !== undefined) {
-        if (auxCars[carIndex].types.length === 3) {
-          auxCars[carIndex].types = changePosition(
-            auxCars[carIndex]?.types,
-            index,
-            1
-          );
-        } else if (auxCars[carIndex]?.types.length === 2) {
-          auxCars[carIndex].types = changePosition(
-            auxCars[carIndex]?.types,
-            index,
-            0
-          );
-        }
-      }
+    if (type === 'forward') {
+      auxCars[carIndex].types = changePosition(auxCars[carIndex]?.types, 0, 2);
+    } else if (type === 'back') {
+      auxCars[carIndex].types = changePosition(auxCars[carIndex]?.types, 2, 0);
+    } else {
+      auxCars[carIndex].types = changePosition(auxCars[carIndex]?.types, 1, 0);
     }
 
     setCars(auxCars);

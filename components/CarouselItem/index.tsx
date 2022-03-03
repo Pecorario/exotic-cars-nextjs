@@ -1,6 +1,6 @@
 import { Container, Img } from './styles';
-import { useAppContext } from '../../store/AppWrapper';
-import { CarouselItemProps } from '../../shared/models/UIProps';
+import { useAppContext } from '@store/AppWrapper';
+import { CarouselItemProps } from '@models/UIProps';
 
 export function CarouselItem({ url, selected, id, number }: CarouselItemProps) {
   const { selectCar } = useAppContext();

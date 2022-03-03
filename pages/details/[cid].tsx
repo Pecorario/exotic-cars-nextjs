@@ -4,10 +4,11 @@ import Head from 'next/head';
 import path from 'path';
 import fs from 'fs/promises';
 
-import { Carousel, Header } from '../../components/index';
+import { Carousel, Header } from '@components/index';
 
-import { CarProps, CarsProps } from '../../shared/models/CarsProps';
-import * as S from '../../styles/pages/details';
+import { CarProps, CarsProps } from '@models/CarsProps';
+import * as S from '@styles/pages/details';
+import { useAppContext } from '@store/AppWrapper';
 
 const getColor = (color: string | undefined) => {
   if (color) {
@@ -18,13 +19,15 @@ const getColor = (color: string | undefined) => {
 
 export default function Details({ car }: CarsProps) {
   const router = useRouter();
-  const type = car?.types[0];
-  const color = getColor(type?.color);
+
+  const { cars } = useAppContext();
+  const carCtx = cars.find((carF: CarProps) => carF.id === car?.id);
+  const carSelected = carCtx?.types.find((type: any) => type.selected === true);
+  const color = getColor(carSelected?.color);
 
   const backHome = () => {
     router.push('/');
   };
-
   return (
     <div>
       <Head>
@@ -72,11 +75,11 @@ export default function Details({ car }: CarsProps) {
           />
           <S.Car>
             <S.Img
-              src={type?.urlFrontView}
+              src={carSelected?.urlFrontView}
               alt={`${car?.brand} ${car?.model}`}
             />
             <S.TypeContainer>
-              <S.Number>{type?.number}</S.Number>
+              <S.Number>{carSelected?.number}</S.Number>
               <S.Color>{color}</S.Color>
             </S.TypeContainer>
           </S.Car>

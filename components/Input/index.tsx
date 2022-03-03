@@ -1,7 +1,7 @@
 import { MdPlace } from 'react-icons/md';
 import { IoCalendarSharp } from 'react-icons/io5';
 
-import { InputProps } from '../../shared/models/UIProps';
+import { InputProps } from '@models/UIProps';
 import { Container, InputContent } from './styles';
 
 export function Input({ type, value, icon, onChange }: InputProps) {
